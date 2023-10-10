@@ -38,6 +38,7 @@ struct ChatBoxView: View {
                         friendProfileShowing.toggle()
                     }label:{
                         VStack{
+                            //KingFisher
                             Image(user.profileImageLink ?? "person.circle.fill")
                                 .resizable()
                                 .frame(width: 80, height: 80)

@@ -18,6 +18,7 @@ struct FriendProfileView: View {
                 }
                 .foregroundColor(.green)
                 .padding(.trailing,300)
+                //Kingfisher Image
                 Image(user?.profileImageLink ?? "person.circle.fill")
                     .resizable()
                     .frame(width: 100, height: 100)

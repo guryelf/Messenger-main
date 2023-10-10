@@ -19,7 +19,7 @@ class UserService {
         let snap = try await Firestore.firestore().collection("users").document(uid).getDocument()
         let user = try snap.data(as: User.self)
         self.currentUser = user
-        print("DEBUG: Current user id\(currentUser)")
+        print("DEBUG: Current user id\(currentUser?.uid)")
     }
     func decodeUsers() async throws -> [User] {
         guard let currentid = Auth.auth().currentUser?.uid else{ return []}
@@ -33,5 +33,12 @@ class UserService {
             guard let user = try? snap?.data(as: User.self) else {return}
             completion(user)
         }
+    }
+    func updateUserProfilePhoto(url : String) async throws{
+        guard let userUid = currentUser?.uid else {return }
+        try? await Firestore.firestore().collection("users").document(userUid).updateData([
+            "profileImageLink" : url
+        ])
+        self.currentUser?.profileImageLink = url
     }
 }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import Kingfisher
 
 struct ProfileView: View {
     @Environment(\.dismiss) var dismiss
@@ -25,14 +26,12 @@ struct ProfileView: View {
                 .foregroundColor(.green)
                 VStack(alignment: .center,spacing: 15){
                     PhotosPicker(selection: $viewmodel.selectedPhoto) {
-                        if let image = viewmodel.profilePhoto{
-                            VStack(spacing:15){
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 100,height: 100)
-                                    .clipShape(Circle())
-                            }
+                        if user?.profileImageLink != nil{
+                            KFImage(URL(string: user?.profileImageLink ?? ""))
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
                         }
                         else{
                             Image(systemName: "person.circle.fill")

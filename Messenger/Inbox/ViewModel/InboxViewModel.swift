@@ -15,8 +15,8 @@ class InboxViewModel: ObservableObject{
     @Published var recentMessages = [Message]()
     
     init() {
+        gettingRecentMessages()
         setup()
-        self.gettingRecentMessages()
     }
     private var cancellables = Set<AnyCancellable>()
     
@@ -29,7 +29,6 @@ class InboxViewModel: ObservableObject{
         }.store(in: &cancellables)
     }
     private func gettingRecentMessages(){
-        recentMessages.removeAll()
         guard let userId = Auth.auth().currentUser?.uid else {return }
         
         let query = Firestore.firestore().collection("messages")
@@ -40,22 +39,21 @@ class InboxViewModel: ObservableObject{
         query.addSnapshotListener { snapshot, error in
             guard let documentChanges =
                     snapshot?.documentChanges.filter({ $0.type == .added || $0.type == .modified}) else {return }
-            self.changes.append(contentsOf: documentChanges)
+            for document in documentChanges{
+                var documentId = document.document.documentID
+                if let index = self.recentMessages.firstIndex(where: { $0.messageId == documentId}){
+                    self.changes.remove(at: index)
+                }
+            }
+            self.changes.append(contentsOf: documentChanges.reversed())
         }
     }
     private func loadMessages(changes: [DocumentChange]){
-        let messages = changes.compactMap { try? $0.document.data(as: Message.self) }
-        var unique = messages.filter { message in
-            let isUnique = !messages.contains { item in
-                item.timeStamp != message.timeStamp && message.id == item.id
+        self.recentMessages = changes.compactMap { try? $0.document.data(as: Message.self) }
+        for i in 0..<self.recentMessages.count{
+            UserService.fetchUser(useruid: recentMessages[i].chooseId) { user in
+                self.recentMessages[i].user = user
             }
-            return isUnique
-        }
-        for i in 0..<unique.count{
-            UserService.fetchUser(useruid: unique[i].chooseId) { user in
-                unique[i].user = user
-            }
-            self.recentMessages.append(unique[i])
         }
     }
     func deleteMessages(chatterId : String)async throws{

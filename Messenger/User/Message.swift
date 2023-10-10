@@ -8,7 +8,6 @@
 import Foundation
 import FirebaseFirestoreSwift
 import Firebase
-
 struct Message : Identifiable,Codable,Equatable,Hashable {
     
     @DocumentID var messageId: String?
@@ -17,11 +16,9 @@ struct Message : Identifiable,Codable,Equatable,Hashable {
     let messageText : String
     let timeStamp : Timestamp
     
-    var chatterName : String?
-    var chatterProfile: String?
     var user: User?
     
-    var id: String{
+    var id: String {
         return messageId ?? NSUUID().uuidString
     }
     
@@ -32,8 +29,8 @@ struct Message : Identifiable,Codable,Equatable,Hashable {
     var isThisCurrentUser : Bool{
         return senderId == Auth.auth().currentUser?.uid
     }
+    var timeStampString : String{
+        return timeStamp.dateValue().timeStampString()
+    }
 }
 
-extension Message{
-    static let message = Message(senderId: NSUUID().uuidString, receiverId:  NSUUID().uuidString, messageText: "sa", timeStamp: Timestamp(),chatterName: "kanka naber",chatterProfile: "LoginIcon")
-}

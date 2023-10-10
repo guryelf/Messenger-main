@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct InboxLineView: View {
     var message : Message
@@ -13,9 +14,20 @@ struct InboxLineView: View {
     var body: some View {
         NavigationStack{
             HStack(spacing:10){
-                Image(message.user?.profileImageLink ?? "person.circle.fill" )
-                    .resizable()
-                    .frame(width: 50, height: 50)
+                if message.user?.profileImageLink != nil{
+                    KFImage(URL(string: message.user?.profileImageLink ?? ""))
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .scaledToFill()
+                        .clipShape(Circle())
+                }else{
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .foregroundStyle(Color(.systemGreen))
+                        .scaledToFill()
+                        .clipShape(Circle())
+                }
                 VStack(alignment:.leading,spacing:5){
                     Text(message.user?.fullname ?? "" )
                         .font(.subheadline)
@@ -26,7 +38,7 @@ struct InboxLineView: View {
                         .foregroundColor(.gray)
                         .lineLimit(2)
                 }
-                Text("Today")
+                Text(message.timeStampString)
                     .foregroundStyle(Color(.gray))
                     .padding(.leading,60)
                     .font(.footnote)
@@ -40,9 +52,4 @@ struct InboxLineView: View {
     }
 }
 
-struct InboxLineView_Previews: PreviewProvider {
-    static var previews: some View {
-        InboxLineView(message: Message.message)
-    }
-}
 
