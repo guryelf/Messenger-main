@@ -24,9 +24,9 @@ struct InboxLineView: View {
                     Image(systemName: "person.circle.fill")
                         .resizable()
                         .frame(width: 50, height: 50)
-                        .foregroundStyle(Color(.systemGreen))
                         .scaledToFill()
                         .clipShape(Circle())
+                        .foregroundStyle(Color(.systemGreen))
                 }
                 VStack(alignment:.leading,spacing:5){
                     Text(message.user?.fullname ?? "" )
@@ -46,9 +46,20 @@ struct InboxLineView: View {
                     .imageScale(.small)
                     .foregroundStyle(Color(.gray))
             }
-            .frame(minWidth: UIScreen.main.bounds.width-50)
+            .frame(minWidth: UIScreen.main.bounds.width-20)
+            .padding(.leading)
         }
-        
+        .swipeActions(allowsFullSwipe: false){
+            Button(action: {
+                Task{
+                    try await viewModel.deleteMessages(chatterId: message.user?.uid ?? "")
+                }
+            }, label: {
+                Image(systemName: "trash.circle.fill")
+                Text("Delete")
+            })
+            .tint(Color(.systemRed))
+        }
     }
 }
 

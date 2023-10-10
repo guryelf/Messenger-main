@@ -31,18 +31,16 @@ struct NewMessageView: View {
                     Button {
                         user = person
                     } label: {
-                        HStack(spacing: 20.0){
+                        HStack(spacing:20){
                             if person.profileImageLink != nil{
                                 KFImage(URL(string: person.profileImageLink ?? ""))
                                     .resizable()
                                     .frame(width: 40, height: 40)
-                                    .padding(.trailing)
                                     .clipShape(Circle())
                             }else{
                                 Image(systemName: "person.circle.fill")
                                     .resizable()
                                     .frame(width: 40, height: 40)
-                                    .padding(.trailing)
                                     .foregroundStyle(Color(.systemGreen))
                                     .clipShape(Circle())
                             }

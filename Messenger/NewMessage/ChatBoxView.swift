@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ChatBoxView: View {
     @StateObject var viewModel : ChatBoxViewModel
@@ -38,10 +39,18 @@ struct ChatBoxView: View {
                         friendProfileShowing.toggle()
                     }label:{
                         VStack{
-                            //KingFisher
-                            Image(user.profileImageLink ?? "person.circle.fill")
-                                .resizable()
-                                .frame(width: 80, height: 80)
+                            if user.profileImageLink != nil{
+                                KFImage(URL(string: user.profileImageLink ?? ""))
+                                    .resizable()
+                                    .frame(width: 70, height: 70)
+                                    .scaledToFill()
+                                    .clipShape(Circle())
+                            }else{
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .frame(width: 70, height: 70)
+                                    .foregroundStyle(Color(.systemGreen))
+                            }
                             Text(user.fullname)
                                 .foregroundColor(.black)
                                 .fontWeight(.bold)

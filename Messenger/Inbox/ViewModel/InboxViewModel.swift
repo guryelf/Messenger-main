@@ -40,12 +40,12 @@ class InboxViewModel: ObservableObject{
             guard let documentChanges =
                     snapshot?.documentChanges.filter({ $0.type == .added || $0.type == .modified}) else {return }
             for document in documentChanges{
-                var documentId = document.document.documentID
+                let documentId = document.document.documentID
                 if let index = self.recentMessages.firstIndex(where: { $0.messageId == documentId}){
                     self.changes.remove(at: index)
                 }
             }
-            self.changes.append(contentsOf: documentChanges.reversed())
+            self.changes.append(contentsOf: documentChanges)
         }
     }
     private func loadMessages(changes: [DocumentChange]){
@@ -58,10 +58,7 @@ class InboxViewModel: ObservableObject{
     }
     func deleteMessages(chatterId : String)async throws{
         guard let userId = Auth.auth().currentUser?.uid else{ return }
-        do{
-            try await Firestore.firestore().collection("messages").document(userId).collection("recent-messages").document(chatterId).delete()
-        }catch{
-            print("DEBUG: ERROR OCCURED WHILE DELETING MESSAGES.... \(error.localizedDescription)")
-        }
+        guard let _ = try? await Firestore.firestore().collection("messages").document(userId).collection("recent-messages").document(chatterId).delete() else {return }
+        gettingRecentMessages()
     }
 }

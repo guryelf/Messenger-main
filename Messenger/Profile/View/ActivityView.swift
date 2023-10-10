@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ActivityView: View {
     @StateObject var viewModel = NewMessageViewModel()
@@ -28,9 +29,20 @@ struct ActivityView: View {
             List{
                 ForEach(viewModel.users){person in
                     HStack{
-                        Image(person.profileImageLink ?? "person.circle.fill")
-                            .resizable()
-                            .frame(width: 40, height: 40)
+                        if person.profileImageLink != nil{
+                            KFImage(URL(string: person.profileImageLink ?? ""))
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .scaledToFill()
+                                .clipShape(Circle())
+                        }else{
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .foregroundStyle(Color(.systemGreen))
+                                .scaledToFill()
+                                .clipShape(Circle())
+                        }
                         VStack{
                             Text(person.fullname)
                                 .fontWeight(.semibold)
