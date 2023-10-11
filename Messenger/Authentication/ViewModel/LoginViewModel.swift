@@ -6,11 +6,19 @@
 //
 
 import Foundation
+import FirebaseAuth
 
-class loginViewModel: ObservableObject{ 
+class LoginViewModel: ObservableObject{
     @Published var email = ""
     @Published var password = ""
     func login() async throws{
         try await AuthService.shared.login(email: email, password: password)
+    }
+    func resetPassword(email: String){
+        Auth.auth().sendPasswordReset(withEmail: email) {error in
+            if let error = error{
+                print(error.localizedDescription)
+            }
+        }
     }
 }

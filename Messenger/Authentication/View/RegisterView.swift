@@ -82,7 +82,7 @@ struct RegisterView: View {
                         .padding(.top,150)
                 }
                 .font(.headline)
-                .padding(.top,100)
+                .padding(.top,50)
             }
         }
     }

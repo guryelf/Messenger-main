@@ -52,4 +52,16 @@ class ProfileViewModel: ObservableObject{
         guard let uiImage = self.uiImage else {return}
         try await UserService.shared.updateUserProfilePhoto(url:url)
     }
+    func deleteAccount()async throws{
+        guard let uid = user?.uid else {return }
+        guard let user = Auth.auth().currentUser else {return}
+        do{
+            try await user.delete()
+            try await Firestore.firestore().collection("users").document(uid).delete()
+            ContentViewModel().userSession = nil
+            AuthService.shared.userSession = nil
+        }catch{
+            print("DEBUG: Failed to delete\(error.localizedDescription)")
+        }
+    }
 }

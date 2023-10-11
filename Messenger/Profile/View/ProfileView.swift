@@ -71,7 +71,9 @@ struct ProfileView: View {
                     }
                     .foregroundColor(.red)
                     Button("Delete Account"){
-                        
+                        Task{
+                           try await viewModel.deleteAccount()
+                        }
                     }
                     .foregroundColor(.red)
                 }

@@ -34,7 +34,7 @@ class InboxViewModel: ObservableObject{
         let query = Firestore.firestore().collection("messages")
             .document(userId)
             .collection("recent-messages")
-            .order(by:"timeStamp",descending: false)
+            .order(by: "timeStamp", descending: true)
         
         query.addSnapshotListener { snapshot, error in
             guard let documentChanges =
@@ -45,7 +45,7 @@ class InboxViewModel: ObservableObject{
                     self.changes.remove(at: index)
                 }
             }
-            self.changes.append(contentsOf: documentChanges)
+            self.changes.append(contentsOf: documentChanges.reversed())
         }
     }
     private func loadMessages(changes: [DocumentChange]){
@@ -59,6 +59,5 @@ class InboxViewModel: ObservableObject{
     func deleteMessages(chatterId : String)async throws{
         guard let userId = Auth.auth().currentUser?.uid else{ return }
         guard let _ = try? await Firestore.firestore().collection("messages").document(userId).collection("recent-messages").document(chatterId).delete() else {return }
-        gettingRecentMessages()
     }
 }

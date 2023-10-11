@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject var viewModel = loginViewModel()
+    @StateObject var viewModel = LoginViewModel()
+    @State var isForgotPassword = false
     var body: some View {
         NavigationStack{
             VStack{
@@ -35,16 +36,19 @@ struct LoginView: View {
                         .padding(.horizontal,20)
             }
             VStack(spacing: 20){
-                Button {
-                    print("Forgot Password")
-                } label: {
+                Button(action:{
+                    isForgotPassword.toggle()
+                } ,label: {
                     Text("Forgot Password")
                         .padding(.top)
                         .padding(.trailing,25)
                         .foregroundColor(.green)
                         .fontWeight(.semibold)
-                }
+                })
                 .frame(maxWidth: .infinity,alignment: .trailing)
+                .sheet(isPresented: $isForgotPassword, content: {
+                    ForgotPasswordView()
+                })
                 Button {
                     Task{ try await viewModel.login() }
                 } label: {
