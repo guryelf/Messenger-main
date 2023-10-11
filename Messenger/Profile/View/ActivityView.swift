@@ -10,6 +10,7 @@ import Kingfisher
 
 struct ActivityView: View {
     @StateObject var viewModel = NewMessageViewModel()
+    @StateObject var profileModel = ProfileViewModel()
     @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack{
@@ -52,7 +53,7 @@ struct ActivityView: View {
                             } label: {
                                 Text(person.email)
                                     .font(.subheadline)
-                                    .foregroundStyle(Color(.black))
+                                    .foregroundStyle(profileModel.darkModeEnabled ? .white : .black)
                             }
                         }
                     }

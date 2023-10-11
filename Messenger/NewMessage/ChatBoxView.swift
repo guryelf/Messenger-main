@@ -10,6 +10,7 @@ import Kingfisher
 
 struct ChatBoxView: View {
     @StateObject var viewModel : ChatBoxViewModel
+    @StateObject var profileModel = ProfileViewModel()
     @State var friendProfileShowing = false
     @Binding var inboxUser : User?
     @Environment(\.dismiss) var dismiss
@@ -52,7 +53,7 @@ struct ChatBoxView: View {
                                     .foregroundStyle(Color(.systemGreen))
                             }
                             Text(user.fullname)
-                                .foregroundColor(.black)
+                                .foregroundColor(profileModel.darkModeEnabled ? .white : .black)
                                 .fontWeight(.bold)
                                 .font(.subheadline)
                         }

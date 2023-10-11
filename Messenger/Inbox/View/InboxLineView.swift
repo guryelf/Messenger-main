@@ -12,8 +12,7 @@ struct InboxLineView: View {
     var message : Message
     @StateObject var viewModel = InboxViewModel()
     var body: some View {
-        NavigationStack{
-            HStack(spacing:10){
+            HStack(alignment:.top,spacing:10){
                 if message.user?.profileImageLink != nil{
                     KFImage(URL(string: message.user?.profileImageLink ?? ""))
                         .resizable()
@@ -30,36 +29,23 @@ struct InboxLineView: View {
                 }
                 VStack(alignment:.leading,spacing:5){
                     Text(message.user?.fullname ?? "" )
-                        .font(.subheadline)
                         .fontWeight(.semibold)
-                        .padding(.trailing,50)
                     Text(message.messageText)
-                        .font(.subheadline)
                         .foregroundColor(.gray)
                         .lineLimit(2)
+                        .frame(maxWidth: UIScreen.main.bounds.width-100,alignment:.leading)
                 }
-                Text(message.timeStampString)
-                    .foregroundStyle(Color(.gray))
-                    .padding(.leading,60)
-                    .font(.footnote)
-                Image(systemName: "chevron.right")
-                    .imageScale(.small)
-                    .foregroundStyle(Color(.gray))
+                .font(.subheadline)
+                HStack{
+                    Text(message.timeStampString)
+                    Image(systemName: "chevron.right")
+                        .imageScale(.small)
+                }
+                .foregroundStyle(Color(.gray))
+                .font(.footnote)
             }
-            .frame(minWidth: UIScreen.main.bounds.width-20)
-            .padding(.leading)
-        }
-        .swipeActions(allowsFullSwipe: false){
-            Button(action: {
-                Task{
-                    try await viewModel.deleteMessages(chatterId: message.user?.uid ?? "")
-                }
-            }, label: {
-                Image(systemName: "trash.circle.fill")
-                Text("Delete")
-            })
-            .tint(Color(.systemRed))
-        }
+        .padding(.horizontal,-10)
+        .frame(height: 70)
     }
 }
 

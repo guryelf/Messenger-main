@@ -11,7 +11,7 @@ import Kingfisher
 
 struct ProfileView: View {
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewmodel = ProfileViewModel()
+    @StateObject var viewModel = ProfileViewModel()
     @StateObject var inboxModel = InboxViewModel()
     var user : User?{
         return inboxModel.currentUser
@@ -25,7 +25,7 @@ struct ProfileView: View {
                 .padding(.trailing,300)
                 .foregroundColor(.green)
                 VStack(alignment: .center,spacing: 15){
-                    PhotosPicker(selection: $viewmodel.selectedPhoto) {
+                    PhotosPicker(selection: $viewModel.selectedPhoto) {
                         if user?.profileImageLink != nil{
                             KFImage(URL(string: user?.profileImageLink ?? ""))
                                 .resizable()
@@ -48,7 +48,7 @@ struct ProfileView: View {
                         .fontWeight(.bold)
                         .lineLimit(1)
                         .frame(width: 200)
-                        .foregroundColor(.black)
+                        .foregroundColor(viewModel.darkModeEnabled ? .white : .black)
                     
                     
                 }
@@ -56,14 +56,12 @@ struct ProfileView: View {
             }
             List{
                 Section{
-                    ForEach(ProfileOptionsViewModel.allCases){options in
+                    Toggle(isOn: $viewModel.darkModeEnabled) {
                         HStack{
-                            Image(systemName: options.Image)
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(options.ImageColor)
-                            Text(options.title)
-                                .padding(.trailing)
+                            Image(systemName: "moon.circle.fill")
+                                .foregroundStyle(Color(.systemBlue))
+                                .imageScale(.large)
+                            Text("Dark Mode")
                         }
                     }
                 }
@@ -79,6 +77,7 @@ struct ProfileView: View {
                 }
             }
         }
+        .preferredColorScheme(viewModel.darkModeEnabled ? .dark : .light)
     }
 }
 struct ProfileView_Previews: PreviewProvider {

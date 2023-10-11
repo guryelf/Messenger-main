@@ -10,6 +10,7 @@ import Kingfisher
 
 struct NewMessageView: View {
     @StateObject var viewModel = NewMessageViewModel()
+    @StateObject var profileModel = ProfileViewModel()
     @State var user : User?
     @Environment(\.dismiss) var dismiss
     @State var showingChat = false
@@ -46,7 +47,7 @@ struct NewMessageView: View {
                             }
                             Text(person.fullname)
                                 .font(.subheadline)
-                                .foregroundStyle(.black)
+                                .foregroundStyle(profileModel.darkModeEnabled ? .white : .black)
                         }
                     }
                     .onChange(of: user, perform: { value in

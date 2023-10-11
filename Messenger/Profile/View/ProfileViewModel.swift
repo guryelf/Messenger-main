@@ -12,6 +12,9 @@ import Firebase
 import FirebaseFirestoreSwift
 @MainActor
 class ProfileViewModel: ObservableObject{
+    
+    @AppStorage("darkModeEnabled") var darkModeEnabled: Bool = false
+    
     var user : User?{
         return InboxViewModel().currentUser
     }

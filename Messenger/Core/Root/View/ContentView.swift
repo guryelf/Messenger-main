@@ -9,10 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewmodel = ContentViewModel()
+    @AppStorage("darkModeEnabled") var darkModeEnabled : Bool = false
     var body: some View {
         Group{
             if viewmodel.userSession != nil{
                 InboxView()
+                    .preferredColorScheme(darkModeEnabled ? .dark : .light)
             }
             else{
                 LoginView()

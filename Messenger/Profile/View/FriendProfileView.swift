@@ -9,6 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct FriendProfileView: View {
+    @StateObject var viewModel = ProfileViewModel()
     let user : User?
     @Environment(\.dismiss) var dismiss
     var body: some View {
@@ -37,6 +38,7 @@ struct FriendProfileView: View {
                     .fontWeight(.bold)
                     .padding(.top)
                     .navigationBarBackButtonHidden(true)
+                    .foregroundColor(viewModel.darkModeEnabled ? .white : .black)
             }
             List{
                 Section{
@@ -47,7 +49,7 @@ struct FriendProfileView: View {
                             Image(systemName: "envelope.fill")
                                 .foregroundColor(.green)
                             Text("E-Mail: ")
-                                .foregroundColor(.black)
+                                .foregroundColor(viewModel.darkModeEnabled ? .white : .black)
                             Text(user?.email ?? "")
                         }
                     }
