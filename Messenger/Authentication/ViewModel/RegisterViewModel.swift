@@ -13,7 +13,7 @@ protocol AuthFormValidation {
     var isPasswordEqual : Bool {get}
 }
 
-
+@MainActor
 class RegisterViewModel: ObservableObject{
     @Published var email = ""
     @Published var password = ""
@@ -26,7 +26,7 @@ class RegisterViewModel: ObservableObject{
             try await AuthService.shared.register(email: email, password: password, fullname: fullname)
         }catch{
             self.hasError = true
-            self.alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription))
+            self.alert = ErrorType(errorType: .authenticationError(description: error.localizedDescription))
         }
     }
 }

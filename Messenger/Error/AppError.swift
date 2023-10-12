@@ -14,16 +14,16 @@ enum AppError: Error , LocalizedError {
     case authenticationError(description: String)
     case userServiceError(description:String)
     
-    var localizedDescription: String? {
+    var errorDescription: String? {
         switch self {
         case .firestoreError(let description):
-            return "Firestore Error: " + description
+            return NSLocalizedString("Firestore Error: " + description,comment: "")
         case .storageError(let description):
-            return "Storage Error: " + description
+            return NSLocalizedString("Storage Error: " + description, comment: "")
         case .authenticationError(let description):
-            return "Authentication Error: " + description
+            return NSLocalizedString("Authentication Error: " + description, comment: "")
         case .userServiceError(description: let description):
-            return "User Service Error: " + description
+            return NSLocalizedString("User Service Error: " + description , comment: "")
         }
     }
 }
@@ -31,6 +31,5 @@ enum AppError: Error , LocalizedError {
 struct ErrorType: Identifiable{
     var id = UUID()
     var errorType : AppError
-
 }
 

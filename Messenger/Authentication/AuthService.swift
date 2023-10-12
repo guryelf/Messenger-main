@@ -27,8 +27,7 @@ class AuthService {
             Task{try await UserService.shared.decodeData()}
         } catch {
             self.hasError = true
-            alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription))
-            print(error.localizedDescription)
+            throw error
         }
     }
     @MainActor
@@ -37,12 +36,11 @@ class AuthService {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
             try await uploadUserData(email: email, fullname: fullname, id: result.user.uid)
-            Task{try await UserService.shared.decodeData()}
+            try await UserService.shared.decodeData()
             print("User Created. ID : \(result.user.uid)")
         }catch{
             self.hasError = true
-            alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription))
-            print(error.localizedDescription)
+            throw error
         }
     }
     func signout() {
@@ -51,7 +49,7 @@ class AuthService {
             self.userSession = nil
         } catch{
             self.hasError = true
-            alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription) )
+            alert = ErrorType(errorType: .authenticationError(description: error.localizedDescription) )
             print(error.localizedDescription)
         }
     }

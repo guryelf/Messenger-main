@@ -12,7 +12,7 @@ protocol LoginValidation {
     var isEmailEmpty : Bool {get}
     var isPasswordEmpty : Bool {get}
 }
-
+@MainActor
 class LoginViewModel: ObservableObject{
     @Published var email = ""
     @Published var password = ""
@@ -23,14 +23,14 @@ class LoginViewModel: ObservableObject{
             try await AuthService.shared.login(email: email, password: password)
         }catch{
             self.hasError = true
-            alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription))
+            alert = ErrorType(errorType: .authenticationError(description: error.localizedDescription))
     }
 }
     func resetPassword(email: String){
         Auth.auth().sendPasswordReset(withEmail: email) {error in
             if let error = error{
                 self.hasError = true
-                self.alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription))
+                self.alert = ErrorType(errorType: .authenticationError(description: error.localizedDescription))
             }
         }
     }
