@@ -8,16 +8,31 @@
 import Foundation
 import FirebaseAuth
 
+protocol LoginValidation {
+    var isEmailEmpty : Bool {get}
+    var isPasswordEmpty : Bool {get}
+}
+
 class LoginViewModel: ObservableObject{
     @Published var email = ""
     @Published var password = ""
+    @Published var alert : ErrorType? = nil
+    @Published var hasError = false
     func login() async throws{
-        try await AuthService.shared.login(email: email, password: password)
+        do{
+            try await AuthService.shared.login(email: email, password: password)
+        }catch{
+            self.hasError = true
+            alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription))
+            print(alert?.errorType)
     }
+}
     func resetPassword(email: String){
         Auth.auth().sendPasswordReset(withEmail: email) {error in
             if let error = error{
-                print(error.localizedDescription)
+                self.hasError = true
+                self.alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription))
+                print(self.alert?.errorType.localizedDescription)
             }
         }
     }

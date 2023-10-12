@@ -8,7 +8,7 @@
 import Foundation
 
 protocol AuthFormValidation {
-    var isFormValid : Bool {get}
+    var isEmailValid : Bool {get}
     var isPasswordValid : Bool {get}
     var isPasswordEqual : Bool {get}
 }
@@ -18,8 +18,15 @@ class RegisterViewModel: ObservableObject{
     @Published var email = ""
     @Published var password = ""
     @Published var fullname = ""
+    @Published var alert : ErrorType? = nil
+    @Published var hasError = false
     
     func createUser() async throws{
-        try await AuthService.shared.register(email: email, password: password, fullname: fullname)
+        do{
+            try await AuthService.shared.register(email: email, password: password, fullname: fullname)
+        }catch{
+            self.hasError = true
+            self.alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription))
+        }
     }
 }

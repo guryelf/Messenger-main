@@ -11,6 +11,8 @@ import FirebaseFirestoreSwift
 
 class AuthService {
     @Published var userSession : FirebaseAuth.User?
+    @Published var alert : ErrorType? = nil
+    @Published var hasError = false
     static let shared = AuthService()
     init() {
         self.userSession = Auth.auth().currentUser
@@ -23,8 +25,10 @@ class AuthService {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             self.userSession = result.user
             Task{try await UserService.shared.decodeData()}
-        } catch{
-            print("Debug: \(error.localizedDescription)")
+        } catch {
+            self.hasError = true
+            alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription))
+            print(error.localizedDescription)
         }
     }
     @MainActor
@@ -36,7 +40,9 @@ class AuthService {
             Task{try await UserService.shared.decodeData()}
             print("User Created. ID : \(result.user.uid)")
         }catch{
-            print("Debug: \(error.localizedDescription)")
+            self.hasError = true
+            alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription))
+            print(error.localizedDescription)
         }
     }
     func signout() {
@@ -44,7 +50,9 @@ class AuthService {
             try Auth.auth().signOut()
             self.userSession = nil
         } catch{
-            print("DEBUG:Signout failed.ERROR CODE: \(error.localizedDescription)")
+            self.hasError = true
+            alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription) )
+            print(error.localizedDescription)
         }
     }
     func uploadUserData(email: String,fullname:String,id:String) async throws{

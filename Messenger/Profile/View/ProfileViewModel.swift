@@ -12,7 +12,8 @@ import Firebase
 import FirebaseFirestoreSwift
 @MainActor
 class ProfileViewModel: ObservableObject{
-    
+    @Published var alert : ErrorType?
+    @Published var hasError = false
     @AppStorage("darkModeEnabled") var darkModeEnabled: Bool = false
     
     var user : User?{
@@ -44,7 +45,8 @@ class ProfileViewModel: ObservableObject{
             let url = try await storageRef.downloadURL().absoluteString
             return url
         }catch{
-            print("DEBUG:\(error.localizedDescription)")
+            self.hasError = true
+            self.alert = ErrorType(errorType: AppError.storageError(description: error.localizedDescription))
         }
         return "nil"
     }
@@ -58,10 +60,12 @@ class ProfileViewModel: ObservableObject{
         do{
             try await user.delete()
             try await Firestore.firestore().collection("users").document(uid).delete()
+            try await Storage.storage().reference().child("\(uid)").delete()
             ContentViewModel().userSession = nil
             AuthService.shared.userSession = nil
         }catch{
-            print("DEBUG: Failed to delete\(error.localizedDescription)")
+            self.hasError = true
+            self.alert = ErrorType(errorType: AppError.storageError(description: error.localizedDescription))
         }
     }
 }

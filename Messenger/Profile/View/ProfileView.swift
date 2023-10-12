@@ -13,47 +13,47 @@ struct ProfileView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = ProfileViewModel()
     @StateObject var inboxModel = InboxViewModel()
+    @State var showAlert = false
     var user : User?{
         return inboxModel.currentUser
     }
     var body: some View {
-        VStack{
-            VStack{
-                Button("Back"){
-                    dismiss()
+        NavigationStack{
+            VStack(alignment: .center,spacing: 15){
+                PhotosPicker(selection: $viewModel.selectedPhoto) {
+                    if user?.profileImageLink != nil{
+                        KFImage(URL(string: user?.profileImageLink ?? ""))
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                    }
+                    else{
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 100
+                                   , height: 100)
+                            .clipShape(Circle())
+                            .foregroundColor(.green)
+                    }
                 }
-                .padding(.trailing,300)
-                .foregroundColor(.green)
-                VStack(alignment: .center,spacing: 15){
-                    PhotosPicker(selection: $viewModel.selectedPhoto) {
-                        if user?.profileImageLink != nil{
-                            KFImage(URL(string: user?.profileImageLink ?? ""))
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 100, height: 100)
-                                .clipShape(Circle())
-                        }
-                        else{
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 100
-                                       , height: 100)
-                                .clipShape(Circle())
-                                .foregroundColor(.green)
+                .toolbar{
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Back"){
+                            dismiss()
                         }
                     }
-                    Text(user?.fullname ?? "Kullanıcı İsmi")
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                        .lineLimit(1)
-                        .frame(width: 200)
-                        .foregroundColor(viewModel.darkModeEnabled ? .white : .black)
-                    
-                    
                 }
-                .frame(width: UIScreen.main.bounds.width, height: 200)
+                .foregroundStyle(Color(.systemGreen))
+                Text(user?.fullname ?? "Kullanıcı İsmi")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .lineLimit(1)
+                    .frame(width: 200)
+                    .foregroundColor(viewModel.darkModeEnabled ? .white : .black)
             }
+            .frame(width: UIScreen.main.bounds.width, height: 200)
             List{
                 Section{
                     Toggle(isOn: $viewModel.darkModeEnabled) {
@@ -72,14 +72,16 @@ struct ProfileView: View {
                     .foregroundColor(.red)
                     Button("Delete Account"){
                         Task{
-                           try await viewModel.deleteAccount()
+                            try? await viewModel.deleteAccount()
                         }
+                        
                     }
                     .foregroundColor(.red)
                 }
             }
+            
+            .preferredColorScheme(viewModel.darkModeEnabled ? .dark : .light)
         }
-        .preferredColorScheme(viewModel.darkModeEnabled ? .dark : .light)
     }
 }
 struct ProfileView_Previews: PreviewProvider {

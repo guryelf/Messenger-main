@@ -28,6 +28,11 @@ struct RegisterView: View {
                     .background(Color(.systemGray6))
                     .cornerRadius(20)
                     .padding(.horizontal,20)
+                Text(!isEmailValid ? "Email is not valid" : "")
+                    .foregroundStyle(Color(.systemRed))
+                    .padding(.trailing, 220)
+                    .font(.system(size: 15))
+                    .frame(height: 0)
                 ZStack(alignment:.trailing){
                     SecureField("Password", text: $viewModel.password)
                         .padding(15)
@@ -67,8 +72,8 @@ struct RegisterView: View {
                     .background(Color(uiColor: .systemGreen))
                     .cornerRadius(15)
             }
-            .disabled(!isFormValid)
-            .opacity(isFormValid ? 1.0 : 0.5)
+            .disabled(!isEmailValid)
+            .opacity(isEmailValid ? 1.0 : 0.5)
             
             Button{
                 dismiss()
@@ -85,6 +90,9 @@ struct RegisterView: View {
                 .padding(.top,50)
             }
         }
+        .alert(isPresented: $viewModel.hasError, error: viewModel.alert?.errorType){
+        }
+        
     }
 }
 extension RegisterView: AuthFormValidation{
@@ -97,10 +105,9 @@ extension RegisterView: AuthFormValidation{
         && !viewModel.password.isEmpty
     }
     
-    var isFormValid: Bool {
+    var isEmailValid: Bool {
         return !viewModel.email.isEmpty
         && viewModel.email.contains("@")
-        && !viewModel.fullname.isEmpty
     }
 }
 struct RegisterView_Previews: PreviewProvider {
