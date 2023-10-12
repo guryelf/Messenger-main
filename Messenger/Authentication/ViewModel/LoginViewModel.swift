@@ -24,7 +24,6 @@ class LoginViewModel: ObservableObject{
         }catch{
             self.hasError = true
             alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription))
-            print(alert?.errorType)
     }
 }
     func resetPassword(email: String){
@@ -32,7 +31,6 @@ class LoginViewModel: ObservableObject{
             if let error = error{
                 self.hasError = true
                 self.alert = ErrorType(errorType: AppError.authenticationError(description: error.localizedDescription))
-                print(self.alert?.errorType.localizedDescription)
             }
         }
     }
