@@ -14,7 +14,7 @@ class UserService {
     
     static let shared = UserService()
     
-    func decodeData() async throws{
+    func decodeUserData() async throws{
         guard let uid = Auth.auth().currentUser?.uid else{return }
         let snap = try await Firestore.firestore().collection("users").document(uid).getDocument()
         let user = try snap.data(as: User.self)

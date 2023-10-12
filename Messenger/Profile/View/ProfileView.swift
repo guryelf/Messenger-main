@@ -74,9 +74,10 @@ struct ProfileView: View {
                         Task{
                             try? await viewModel.deleteAccount()
                         }
-                        
                     }
                     .foregroundColor(.red)
+                    .alert(isPresented: $viewModel.hasError, error: viewModel.alert?.errorType) {
+                    }
                 }
             }
             

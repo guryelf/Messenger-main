@@ -17,14 +17,14 @@ class AuthService {
     init() {
         self.userSession = Auth.auth().currentUser
         print("DEBUG: User session id \(userSession?.uid ?? "")")
-        Task{try await UserService.shared.decodeData()}
+        Task{try await UserService.shared.decodeUserData()}
     }
     @MainActor
     func login(email:String,password:String) async throws{
         do{
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             self.userSession = result.user
-            Task{try await UserService.shared.decodeData()}
+            try await UserService.shared.decodeUserData()
         } catch {
             self.hasError = true
             throw error
@@ -36,7 +36,7 @@ class AuthService {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
             try await uploadUserData(email: email, fullname: fullname, id: result.user.uid)
-            try await UserService.shared.decodeData()
+            try await UserService.shared.decodeUserData()
             print("User Created. ID : \(result.user.uid)")
         }catch{
             self.hasError = true

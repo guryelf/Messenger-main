@@ -46,12 +46,12 @@ class ProfileViewModel: ObservableObject{
             return url
         }catch{
             self.hasError = true
-            self.alert = ErrorType(errorType: AppError.storageError(description: error.localizedDescription))
+            self.alert = ErrorType(errorType: .storageError(description: error.localizedDescription))
         }
         return "nil"
     }
     private func updateUserPhoto(url : String) async throws{
-        guard let uiImage = self.uiImage else {return}
+        guard self.uiImage != nil else {return}
         try await UserService.shared.updateUserProfilePhoto(url:url)
     }
     func deleteAccount()async throws{
@@ -60,12 +60,12 @@ class ProfileViewModel: ObservableObject{
         do{
             try await user.delete()
             try await Firestore.firestore().collection("users").document(uid).delete()
-            try await Storage.storage().reference().child("\(uid)").delete()
+            try? await Storage.storage().reference().child("\(uid)").delete()
             ContentViewModel().userSession = nil
             AuthService.shared.userSession = nil
         }catch{
             self.hasError = true
-            self.alert = ErrorType(errorType: AppError.storageError(description: error.localizedDescription))
+            self.alert = ErrorType(errorType: .storageError(description: error.localizedDescription))
         }
     }
 }
