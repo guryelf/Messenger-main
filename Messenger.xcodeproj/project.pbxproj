@@ -32,6 +32,7 @@
 		4368FE762AB4F121005394F3 /* InboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4368FE752AB4F121005394F3 /* InboxView.swift */; };
 		4368FE792AB4FA6D005394F3 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4368FE782AB4FA6D005394F3 /* ActivityView.swift */; };
 		4373BFC92AC9C455007544E7 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4373BFC82AC9C455007544E7 /* Message.swift */; };
+		43851EA02AD885EF000477F6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43851E9F2AD885EF000477F6 /* Extensions.swift */; };
 		439B83682ABA1B5C00CB019B /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439B83672ABA1B5C00CB019B /* ContentViewModel.swift */; };
 		439B836F2ABA2B6A00CB019B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 439B836E2ABA2B6A00CB019B /* GoogleService-Info.plist */; };
 		439B83712ABA308500CB019B /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439B83702ABA308500CB019B /* UserService.swift */; };
@@ -68,6 +69,7 @@
 		4368FE752AB4F121005394F3 /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
 		4368FE782AB4FA6D005394F3 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		4373BFC82AC9C455007544E7 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		43851E9F2AD885EF000477F6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		439B83672ABA1B5C00CB019B /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		439B836E2ABA2B6A00CB019B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		439B83702ABA308500CB019B /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			children = (
 				43C50A0C2AB8D80C00112E5A /* LoginViewModel.swift */,
 				43C50A0E2AB8D9E500112E5A /* RegisterViewModel.swift */,
+				43851E9F2AD885EF000477F6 /* Extensions.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			children = (
 				435207F02AC85FF900971717 /* Authentication */,
 				4368FE6C2AB48739005394F3 /* App */,
+				43851E9D2AD8858D000477F6 /* ChatBox */,
 				43C2ABFF2AD819070031C52B /* Error */,
 				435207EA2AC85FBC00971717 /* Inbox */,
 				43CDA0DA2AB637EA00302B65 /* NewMessage */,
@@ -255,6 +259,24 @@
 			path = Core/Root;
 			sourceTree = "<group>";
 		};
+		43851E9D2AD8858D000477F6 /* ChatBox */ = {
+			isa = PBXGroup;
+			children = (
+				43851E9E2AD885AA000477F6 /* ViewModel */,
+				433DC52B2AB8994800E4716A /* MessageBoxView.swift */,
+				43547A4D2AB725B1001AD4AE /* ChatBoxView.swift */,
+			);
+			path = ChatBox;
+			sourceTree = "<group>";
+		};
+		43851E9E2AD885AA000477F6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				434CAA382AC9F503003BFECA /* ChatBoxViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		439B83652ABA1B4500CB019B /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,7 +297,6 @@
 			isa = PBXGroup;
 			children = (
 				43A8B0612ABB54AC0009ECED /* NewMessageViewModel.swift */,
-				434CAA382AC9F503003BFECA /* ChatBoxViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -293,8 +314,6 @@
 			children = (
 				43A8B0602ABB549F0009ECED /* ViewModels */,
 				43CDA0DB2AB637F800302B65 /* NewMessageView.swift */,
-				43547A4D2AB725B1001AD4AE /* ChatBoxView.swift */,
-				433DC52B2AB8994800E4716A /* MessageBoxView.swift */,
 				43547A4F2AB72CAB001AD4AE /* MessageLineView.swift */,
 			);
 			path = NewMessage;
@@ -409,6 +428,7 @@
 				434CAA372AC9E8DA003BFECA /* MessageService.swift in Sources */,
 				43ABC59B2AD72BD7005858C4 /* ForgotPasswordView.swift in Sources */,
 				43C50A0B2AB8D50B00112E5A /* AuthService.swift in Sources */,
+				43851EA02AD885EF000477F6 /* Extensions.swift in Sources */,
 				4373BFC92AC9C455007544E7 /* Message.swift in Sources */,
 				4368FE5A2AB48712005394F3 /* MessengerApp.swift in Sources */,
 				434CAA392AC9F503003BFECA /* ChatBoxViewModel.swift in Sources */,

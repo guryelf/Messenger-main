@@ -15,9 +15,10 @@ protocol AuthFormValidation {
 
 @MainActor
 class RegisterViewModel: ObservableObject{
+    @Published var fullname = ""
     @Published var email = ""
     @Published var password = ""
-    @Published var fullname = ""
+    @Published var confirmPw = ""
     @Published var alert : ErrorType? = nil
     @Published var hasError = false
     

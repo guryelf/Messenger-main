@@ -8,20 +8,25 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @State var text = ""
     @StateObject var viewModel = RegisterViewModel()
     @Environment(\.dismiss) var dismiss
+    @FocusState var focus : AnyKeyPath?
+    init(){
+        setFocus()
+    }
     var body: some View {
         NavigationStack{
             VStack(spacing: 15){
                 Image("LoginIcon")
-                TextField("Full Name", text: $viewModel.fullname)
+                TextField("Full Name", text: $viewModel.fullname,onCommit: setFocus)
+                    .focused($focus,equals: \RegisterViewModel.fullname)
                     .padding(15)
                     .background(Color(.systemGray6))
                     .cornerRadius(20)
                     .padding(.horizontal,20)
                     .autocorrectionDisabled()
-                TextField("E-Mail", text: $viewModel.email)
+                TextField("E-Mail", text: $viewModel.email,onCommit: setFocus)
+                    .focused($focus,equals: \RegisterViewModel.email)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
                     .padding(15)
@@ -34,7 +39,8 @@ struct RegisterView: View {
                     .font(.system(size: 15))
                     .frame(height: 0)
                 ZStack(alignment:.trailing){
-                    SecureField("Password", text: $viewModel.password)
+                    SecureField("Password", text: $viewModel.password,onCommit: setFocus)
+                        .focused($focus,equals: \RegisterViewModel.password)
                         .padding(15)
                         .background(Color(uiColor: .systemGray6))
                         .cornerRadius(20)
@@ -48,7 +54,8 @@ struct RegisterView: View {
                 }
                 ZStack(alignment:.trailing) {
                     VStack{
-                        SecureField("Confirm Password", text: $text)
+                        SecureField("Confirm Password", text: $viewModel.confirmPw,onCommit: setFocus)
+                            .focused($focus,equals: \RegisterViewModel.confirmPw)
                             .padding(15)
                             .background(Color(uiColor: .systemGray6))
                             .cornerRadius(20)
@@ -95,23 +102,10 @@ struct RegisterView: View {
         
     }
 }
-extension RegisterView: AuthFormValidation{
-    var isPasswordEqual: Bool{
-        return text == viewModel.password
-        && !text.isEmpty
-    }
-    var isPasswordValid: Bool {
-        return (viewModel.password.count > 5)
-        && !viewModel.password.isEmpty
-    }
-    
-    var isEmailValid: Bool {
-        return !viewModel.email.isEmpty
-        && viewModel.email.contains("@")
-    }
-}
+/*
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
         RegisterView()
     }
 }
+*/
