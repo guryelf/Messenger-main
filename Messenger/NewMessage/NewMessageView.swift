@@ -26,6 +26,7 @@ struct NewMessageView: View {
                 .foregroundColor(.green)
             }
         }
+        .searchable(text: $viewModel.query)
         List{
             ForEach(viewModel.users){person in
                 NavigationStack{

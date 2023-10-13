@@ -14,6 +14,7 @@ struct User: Equatable,Codable,Identifiable,Hashable{
     let fullname : String
     var email : String
     var profileImageLink : String?
+    var hasNewMessage : Bool?
     
     var id : String{
         return uid ?? NSUUID().uuidString

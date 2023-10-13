@@ -69,14 +69,14 @@ struct ChatBoxView: View {
                 ScrollView{
                     ForEach(viewModel.messages){message in
                         MessageBoxView(message: message)
+                            .onChange(of: message) { newValue in
+                                withAnimation {
+                                    proxy.scrollTo(newValue.id, anchor: .bottom)
+                                }
+                            }
+
                     }
                 }
-                .onChange(of: viewModel.messages.last?.id) { newValue in
-                    withAnimation {
-                        proxy.scrollTo(newValue, anchor: .bottom)
-                    }
-                }
-                
                 .listStyle(.plain)
                 .listRowSeparator(.hidden)
             })

@@ -33,6 +33,7 @@ struct MessageBoxView: View {
                     Spacer()
             }
         }
+        .id(message.id)
     }
 }
 

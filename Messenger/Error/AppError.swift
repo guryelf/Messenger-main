@@ -17,13 +17,13 @@ enum AppError: Error , LocalizedError {
     var errorDescription: String? {
         switch self {
         case .firestoreError(let description):
-            return NSLocalizedString("Firestore Error: " + description,comment: "")
+            return NSLocalizedString("Firestore Error:\n "  + description,comment: "")
         case .storageError(let description):
-            return NSLocalizedString("Storage Error: " + description, comment: "")
+            return NSLocalizedString("Storage Error:\n " + description, comment: "")
         case .authenticationError(let description):
-            return NSLocalizedString("Authentication Error: " + description, comment: "")
+            return NSLocalizedString("Authentication Error:\n " + description, comment: "")
         case .userServiceError(description: let description):
-            return NSLocalizedString("User Service Error: " + description , comment: "")
+            return NSLocalizedString("User Service Error:\n " + description , comment: "")
         }
     }
 }
