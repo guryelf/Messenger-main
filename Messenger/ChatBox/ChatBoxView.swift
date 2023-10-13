@@ -14,7 +14,7 @@ struct ChatBoxView: View {
     @State var friendProfileShowing = false
     @Binding var inboxUser : User?
     @Environment(\.dismiss) var dismiss
-    let user : User
+    var user : User
     init(user: User,inboxUser:Binding<User?>) {
         self.user = user
         _inboxUser = inboxUser

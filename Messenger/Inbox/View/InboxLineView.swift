@@ -38,8 +38,12 @@ struct InboxLineView: View {
                 .font(.subheadline)
                 HStack{
                     Text(message.timeStampString)
-                    Image(systemName: "chevron.right")
-                        .imageScale(.small)
+                    /*
+                     Circle()
+                     .frame(width: 10, height: 10)
+                     .background(Color(message.user?.hasNewMessage ?? false ? .blue : .clear))
+                     .opacity(message.user?.hasNewMessage ?? false ? 1 : 0)
+                     */
                 }
                 .foregroundStyle(Color(.gray))
                 .font(.footnote)

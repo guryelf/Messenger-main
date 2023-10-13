@@ -55,6 +55,7 @@ class InboxViewModel: ObservableObject{
                 self.recentMessages[i].user = user
             }
         }
+        
     }
     func deleteMessages(chatterId : String)async throws{
         guard let userId = Auth.auth().currentUser?.uid else{ return }

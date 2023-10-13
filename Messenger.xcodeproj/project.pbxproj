@@ -20,7 +20,6 @@
 		434CAA372AC9E8DA003BFECA /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434CAA362AC9E8DA003BFECA /* MessageService.swift */; };
 		434CAA392AC9F503003BFECA /* ChatBoxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434CAA382AC9F503003BFECA /* ChatBoxViewModel.swift */; };
 		43547A4E2AB725B1001AD4AE /* ChatBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43547A4D2AB725B1001AD4AE /* ChatBoxView.swift */; };
-		43547A502AB72CAB001AD4AE /* MessageLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43547A4F2AB72CAB001AD4AE /* MessageLineView.swift */; };
 		435548612AD56BF300BFD8FF /* MessageDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435548602AD56BF300BFD8FF /* MessageDate.swift */; };
 		435548642AD585C900BFD8FF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 435548632AD585C900BFD8FF /* Kingfisher */; };
 		4368FE5A2AB48712005394F3 /* MessengerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4368FE592AB48712005394F3 /* MessengerApp.swift */; };
@@ -57,7 +56,6 @@
 		434CAA362AC9E8DA003BFECA /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		434CAA382AC9F503003BFECA /* ChatBoxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBoxViewModel.swift; sourceTree = "<group>"; };
 		43547A4D2AB725B1001AD4AE /* ChatBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBoxView.swift; sourceTree = "<group>"; };
-		43547A4F2AB72CAB001AD4AE /* MessageLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLineView.swift; sourceTree = "<group>"; };
 		435548602AD56BF300BFD8FF /* MessageDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDate.swift; sourceTree = "<group>"; };
 		4368FE562AB48712005394F3 /* Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4368FE592AB48712005394F3 /* MessengerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerApp.swift; sourceTree = "<group>"; };
@@ -312,9 +310,8 @@
 		43CDA0DA2AB637EA00302B65 /* NewMessage */ = {
 			isa = PBXGroup;
 			children = (
-				43A8B0602ABB549F0009ECED /* ViewModels */,
 				43CDA0DB2AB637F800302B65 /* NewMessageView.swift */,
-				43547A4F2AB72CAB001AD4AE /* MessageLineView.swift */,
+				43A8B0602ABB549F0009ECED /* ViewModels */,
 			);
 			path = NewMessage;
 			sourceTree = "<group>";
@@ -411,7 +408,6 @@
 				43C2AC012AD819170031C52B /* AppError.swift in Sources */,
 				43CDA0DC2AB637F800302B65 /* NewMessageView.swift in Sources */,
 				439B83682ABA1B5C00CB019B /* ContentViewModel.swift in Sources */,
-				43547A502AB72CAB001AD4AE /* MessageLineView.swift in Sources */,
 				4341DEB12AB5ECCD009EE11A /* InboxLineView.swift in Sources */,
 				4368FE702AB48794005394F3 /* LoginView.swift in Sources */,
 				434096FE2AB7707600BE7A37 /* FriendProfileView.swift in Sources */,

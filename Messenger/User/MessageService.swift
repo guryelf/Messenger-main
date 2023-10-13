@@ -15,7 +15,6 @@ class MessageService{
         guard let receiverId = receiver.uid else {return }
         guard messageText.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 else {return }
         
-        let receiverUserRef = Firestore.firestore().collection("users").document(receiverId)
         let currentUserRef = messagesRef.document(userId).collection(receiverId).document()
         let receiverRef = messagesRef.document(receiverId).collection(userId).document()
         
@@ -35,7 +34,6 @@ class MessageService{
         currentUserRef.setData(messageData)
         receiverRef.setData(messageData)
         
-        receiverUserRef.updateData(["hasNewMessage" : "true"])
         recentsReceiver.setData(messageData)
         currentUserRecentRef.setData(messageData)
     }
